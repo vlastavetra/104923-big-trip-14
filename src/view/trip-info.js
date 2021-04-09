@@ -6,9 +6,10 @@ export const createTripMainInfoTemplate = (points) => {
     return `${place.join(' — ')}`;
   };
 
-  const getTripPeriod = (points) => {
-    const tripStartDate = dayjs(points[0].startTime).format('D MMM');
-    const tripEndDate = dayjs(points[points.length - 1].endTime).format('D MMM');
+  const getTripPeriod = (startTime, endTime) => {
+    const tripStartDate = dayjs(startTime).format('D MMM');
+    const tripEndDate = dayjs(endTime).format('D MMM');
+
     return `${tripStartDate} – ${tripEndDate}`;
   };
 
@@ -16,7 +17,7 @@ export const createTripMainInfoTemplate = (points) => {
             <div class="trip-info__main">
               <h1 class="trip-info__title">${getTripRoute(points)}</h1>
 
-              <p class="trip-info__dates">${getTripPeriod(points)}</p>
+              <p class="trip-info__dates">${getTripPeriod(points[0].startTime, points[points.length - 1].endTime)}</p>
             </div>
 
             <p class="trip-info__cost">
