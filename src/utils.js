@@ -41,7 +41,7 @@ export const letFormatTimeLong = (date) => {
 };
 
 export const filtredByFlag = (el) => {
-  return el.isChecked
+  return el.isChecked;
 };
 
 export const sortByDate = (a, b) => {
