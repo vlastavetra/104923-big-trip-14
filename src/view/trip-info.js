@@ -1,9 +1,10 @@
 import dayjs from 'dayjs';
+import {createElement} from '../utils.js';
 
-export const createTripMainInfoTemplate = (points) => {
+const createTripMainInfoTemplate = (points) => {
   const getTripRoute = (points) => {
     const place = [...new Set(points.map((point) => point.place))];
-    return `${place.join(' — ')}`;
+    return place.join(' — ');
   };
 
   const getTripPeriod = (startTime, endTime) => {
@@ -25,3 +26,26 @@ export const createTripMainInfoTemplate = (points) => {
             </p>
           </section>`;
 };
+
+export default class TripInfo {
+  constructor(points) {
+    this._data = points;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createTripMainInfoTemplate(this._data);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

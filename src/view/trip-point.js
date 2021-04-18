@@ -1,11 +1,6 @@
-import {letFormatDate, letFormatTimeShort} from '../utils.js';
+import {createElement, letFormatDate, letFormatTimeShort} from '../utils.js';
 
-export const createTripListTemplate = () => {
-  return `<ul class="trip-events__list">
-          </ul>`;
-};
-
-export const createTripItemsTemplate = (points) => {
+const createTripItemsTemplate = (points) => {
   const {type, place, startTime, duration, endTime, basePrice, isFavourite, chekedOffers} = points;
 
   const favoriteClassName = isFavourite
@@ -57,3 +52,26 @@ export const createTripItemsTemplate = (points) => {
             </div>
           </li>`;
 };
+
+export default class TripPoint {
+  constructor(point) {
+    this._data = point;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createTripItemsTemplate(this._data);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
