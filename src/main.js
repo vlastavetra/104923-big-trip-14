@@ -7,8 +7,7 @@ import EmptyTripList from './view/trip-list-empty.js';
 import TripPointView from './view/trip-point.js';
 import FormEditView from './view/form-edit.js';
 import {generateTripPoint} from './mock/trip-point';
-import {getRandomInt, sortByDate} from './utils.js';
-import {render, RenderPosition} from './utils.js';
+import {render, RenderPosition, getRandomInt, sortByDate} from './utils.js';
 
 const pointCounts = {
   MIN: 15,
@@ -62,12 +61,17 @@ render(filtersElement, new FiltersView().getElement(), RenderPosition.BEFOREEND)
 const tripListComponent = new TripListView();
 render(eventsElement, tripListComponent.getElement(), RenderPosition.BEFOREEND);
 
-if (points.length === 0) {
-  render(eventsElement, new EmptyTripList().getElement(), RenderPosition.BEFOREEND);
-} else {
-  render(eventsElement, new SortView().getElement(), RenderPosition.AFTERBEGIN);
-  render(mainElement, new TripInfoView(points).getElement(), RenderPosition.AFTERBEGIN);
-  points.forEach((point) => {
-    renderPoint(tripListComponent.getElement(), point);
-  });
-}
+const renderList = (arr) => {
+  if (arr.length === 0) {
+    render(eventsElement, new EmptyTripList().getElement(), RenderPosition.BEFOREEND);
+  } else {
+    render(eventsElement, new SortView().getElement(), RenderPosition.AFTERBEGIN);
+    render(mainElement, new TripInfoView(arr).getElement(), RenderPosition.AFTERBEGIN);
+
+    arr.forEach((el) => {
+      renderPoint(tripListComponent.getElement(), el);
+    });
+  }
+};
+
+renderList(points);
