@@ -1,5 +1,6 @@
-import {createElement, letFormatTimeLong} from '../utils.js';
+import {letFormatTimeLong} from '../utils/date-format.js';
 import {generateTripPoint} from '../mock/trip-point';
+import AbstractView from './abstract.js';
 
 const createFormEditingTemplate = (point = generateTripPoint()) => {
   const {id, type, place, startTime, endTime, basePrice, destinationText, allOffers} = point;
@@ -133,25 +134,35 @@ const createFormEditingTemplate = (point = generateTripPoint()) => {
           </li>`;
 };
 
-export default class FormEdit {
+export default class FormEdit extends AbstractView{
   constructor(point) {
+    super();
     this._data = point;
-    this._element = null;
+    this._editClickHandler = this._editClickHandler.bind(this);
+    this._formSubmitHandler = this._formSubmitHandler.bind(this);
   }
 
   getTemplate() {
     return createFormEditingTemplate(this._data);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
+  _formSubmitHandler(evt) {
+    evt.preventDefault();
+    this._callback.formSubmit();
   }
 
-  removeElement() {
-    this._element = null;
+  setFormSubmitHandler(callback) {
+    this._callback.formSubmit = callback;
+    this.getElement().querySelector('form').addEventListener('submit', this._formSubmitHandler);
+  }
+
+  _editClickHandler(evt) {
+    evt.preventDefault();
+    this._callback.editClick();
+  }
+
+  setEditClickHandler(callback) {
+    this._callback.editClick = callback;
+    this.getElement().querySelector('.event__rollup-btn').addEventListener('click', this._editClickHandler);
   }
 }

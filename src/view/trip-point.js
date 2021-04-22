@@ -1,4 +1,5 @@
-import {createElement, letFormatDate, letFormatTimeShort} from '../utils.js';
+import {letFormatDate, letFormatTimeShort} from '../utils/date-format.js';
+import AbstractView from './abstract.js';
 
 const createTripItemsTemplate = (points) => {
   const {type, place, startTime, duration, endTime, basePrice, isFavourite, chekedOffers} = points;
@@ -53,25 +54,24 @@ const createTripItemsTemplate = (points) => {
           </li>`;
 };
 
-export default class TripPoint {
+export default class TripPoint extends AbstractView {
   constructor(point) {
+    super();
     this._data = point;
-    this._element = null;
+    this._editClickHandler = this._editClickHandler.bind(this);
   }
 
   getTemplate() {
     return createTripItemsTemplate(this._data);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
+  _editClickHandler(evt) {
+    evt.preventDefault();
+    this._callback.editClick();
   }
 
-  removeElement() {
-    this._element = null;
+  setEditClickHandler(callback) {
+    this._callback.editClick = callback;
+    this.getElement().querySelector('.event__rollup-btn').addEventListener('click', this._editClickHandler);
   }
 }

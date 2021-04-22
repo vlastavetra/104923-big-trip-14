@@ -1,4 +1,5 @@
-import {getRandomInt, getRandomeFlag, getRandomElement, getRandomTime, getRandomLinksArr, filtredByFlag} from '../utils.js';
+import {getRandomInt, getRandomeFlag, getRandomElement, getRandomTime, getRandomLinksArr} from '../utils/random';
+import {filtredByFlag} from '../utils/filter';
 
 const pointType = ['Check-in', 'Sightseeing', 'Restaurant', 'Taxi', 'Bus', 'Train', 'Ship', 'Transport', 'Drive', 'Flight'];
 const pointName = ['Amsterdam', 'Berlin', 'Barcelona', 'Lisboa', 'Budapest'];
