@@ -1,6 +1,7 @@
-import {letFormatTimeLong} from '../utils.js';
+import {createElement, letFormatTimeLong} from '../utils.js';
+import {generateTripPoint} from '../mock/trip-point';
 
-export const createFormEditingTemplate = (point) => {
+const createFormEditingTemplate = (point = generateTripPoint()) => {
   const {id, type, place, startTime, endTime, basePrice, destinationText, allOffers} = point;
 
   return `<li class="trip-events__item">
@@ -131,3 +132,26 @@ export const createFormEditingTemplate = (point) => {
             </form>
           </li>`;
 };
+
+export default class FormEdit {
+  constructor(point) {
+    this._data = point;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createFormEditingTemplate(this._data);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

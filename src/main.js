@@ -1,12 +1,13 @@
-import {createTripMainInfoTemplate} from './view/trip-info.js';
-import {createSiteMenuTemplate} from './view/site-menu.js';
-import {createSiteFiltersTemplate} from './view/site-filters.js';
-import {createSiteSortTemplate} from './view/site-sort.js';
-import {createTripListTemplate, createTripItemsTemplate} from './view/trip-points.js';
-import {createFormCreatingTemplate} from './view/form-create.js';
-import {createFormEditingTemplate} from './view/form-edit.js';
+import TripInfoView from './view/trip-info.js';
+import SiteMenuView from './view/site-menu.js';
+import FiltersView from './view/site-filters.js';
+import SortView from './view/site-sort.js';
+import TripListView from './view/trip-list.js';
+import EmptyTripList from './view/trip-list-empty.js';
+import TripPointView from './view/trip-point.js';
+import FormEditView from './view/form-edit.js';
 import {generateTripPoint} from './mock/trip-point';
-import {getRandomInt, sortByDate} from './utils.js';
+import {render, RenderPosition, getRandomInt, sortByDate} from './utils.js';
 
 const pointCounts = {
   MIN: 15,
@@ -15,8 +16,38 @@ const pointCounts = {
 
 const points = new Array(getRandomInt(pointCounts.MIN, pointCounts.MAX)).fill().map(generateTripPoint).sort(sortByDate);
 
-const render = (container, template, place) => {
-  container.insertAdjacentHTML(place, template);
+const renderPoint = (tripListComponent, task) => {
+  const pointComponent = new TripPointView(task);
+  const pointEditComponent = new FormEditView(task);
+
+  const replacePointToForm = () => {
+    tripListComponent.replaceChild(pointEditComponent.getElement(), pointComponent.getElement());
+    document.addEventListener('keydown', onEscKeyDown);
+    pointEditComponent.getElement().querySelector('.event__rollup-btn').addEventListener('click', replaceFormToPoint);
+  };
+
+  const replaceFormToPoint = () => {
+    tripListComponent.replaceChild(pointComponent.getElement(), pointEditComponent.getElement());
+  };
+
+  const onEscKeyDown = (evt) => {
+    if (evt.key === 'Escape' || evt.key === 'Esc') {
+      evt.preventDefault();
+      replaceFormToPoint();
+      document.removeEventListener('keydown', onEscKeyDown);
+    }
+  };
+
+  pointComponent.getElement().querySelector('.event__rollup-btn').addEventListener('click', () => {
+    replacePointToForm();
+  });
+
+  pointEditComponent.getElement().querySelector('form').addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    replaceFormToPoint();
+  });
+
+  render(tripListComponent, pointComponent.getElement(), RenderPosition.BEFOREEND);
 };
 
 const mainElement = document.querySelector('.trip-main');
@@ -24,19 +55,23 @@ const navigationElement = mainElement.querySelector('.trip-controls__navigation'
 const filtersElement = mainElement.querySelector('.trip-controls__filters');
 const eventsElement = document.querySelector('.trip-events');
 
-render(mainElement, createTripMainInfoTemplate(points), 'afterbegin');
-render(navigationElement, createSiteMenuTemplate(), 'beforeend');
-render(filtersElement, createSiteFiltersTemplate(), 'beforeend');
-render(eventsElement, createSiteSortTemplate(), 'beforeend');
-render(eventsElement, createTripListTemplate(), 'beforeend');
+render(navigationElement, new SiteMenuView().getElement(), RenderPosition.BEFOREEND);
+render(filtersElement, new FiltersView().getElement(), RenderPosition.BEFOREEND);
 
-const eventsList = document.querySelector('.trip-events__list');
+const tripListComponent = new TripListView();
+render(eventsElement, tripListComponent.getElement(), RenderPosition.BEFOREEND);
 
-points.forEach((point) => {
-  render(eventsList, createTripItemsTemplate(point), 'beforeend');
-});
+const renderList = (arr) => {
+  if (arr.length === 0) {
+    render(eventsElement, new EmptyTripList().getElement(), RenderPosition.BEFOREEND);
+  } else {
+    render(eventsElement, new SortView().getElement(), RenderPosition.AFTERBEGIN);
+    render(mainElement, new TripInfoView(arr).getElement(), RenderPosition.AFTERBEGIN);
 
-const eventsItem = eventsList.querySelector('.trip-events__item');
+    arr.forEach((el) => {
+      renderPoint(tripListComponent.getElement(), el);
+    });
+  }
+};
 
-render(eventsItem , createFormEditingTemplate(points[0]), 'beforeend');
-render(eventsList , createFormCreatingTemplate(points[getRandomInt(0, points.length - 1)]), 'afterbegin');
+renderList(points);
