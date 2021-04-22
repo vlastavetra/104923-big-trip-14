@@ -25,7 +25,7 @@ const renderPoint = (tripListComponent, point) => {
   const pointEditComponent = new FormEditView(point);
 
   const replacePointToForm = () => {
-    replace(tripListComponent, pointEditComponent, pointComponent)
+    replace(tripListComponent, pointEditComponent, pointComponent);
 
     document.addEventListener('keydown', onEscKeyDown);
 
