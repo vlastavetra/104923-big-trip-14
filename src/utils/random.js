@@ -17,9 +17,9 @@ export const getRandomTime = (startTime, minutes) => {
   if (startTime) {
     return dayjs(startTime).add(minutes, 'minute').toDate();
   }
-  const gap = 36;
+  const HOURS_IN_DAY = 24;
 
-  return dayjs().add(getRandomInt(0, gap), 'hour').toDate();
+  return dayjs().add(getRandomInt(0, HOURS_IN_DAY), 'hour').toDate();
 };
 
 export const getRandomLinksArr = (element, MIN, MAX) => {

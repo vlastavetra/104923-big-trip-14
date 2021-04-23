@@ -1,5 +1,5 @@
 import AbstractView from './abstract.js';
-import {letFormatDate} from '../utils/date-format.js';
+import {formatDate} from '../utils/date-format.js';
 
 const createTripMainInfoTemplate = (points) => {
   const getTripRoute = (points) => {
@@ -8,8 +8,8 @@ const createTripMainInfoTemplate = (points) => {
   };
 
   const getTripPeriod = (startTime, endTime) => {
-    const tripStartDate = letFormatDate(startTime);
-    const tripEndDate = letFormatDate(endTime);
+    const tripStartDate = formatDate(startTime);
+    const tripEndDate = formatDate(endTime);
 
     return `${tripStartDate} – ${tripEndDate}`;
   };

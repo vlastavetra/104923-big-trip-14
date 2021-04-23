@@ -1,4 +1,4 @@
-import {letFormatDate, letFormatTimeShort} from '../utils/date-format.js';
+import {formatDate, formatTimeShort} from '../utils/date-format.js';
 import AbstractView from './abstract.js';
 
 const createTripItemsTemplate = (points) => {
@@ -8,7 +8,7 @@ const createTripItemsTemplate = (points) => {
     ? 'event__favorite-btn--active'
     : '';
 
-  const letFormatDuration = (duration) => {
+  const formatDuration = (duration) => {
     const hour = duration / 60;
     const day = hour / 24;
 
@@ -21,18 +21,18 @@ const createTripItemsTemplate = (points) => {
 
   return `<li class="trip-events__item">
             <div class="event">
-              <time class="event__date" datetime="2019-03-18">${letFormatDate(startTime)}</time>
+              <time class="event__date" datetime="2019-03-18">${formatDate(startTime)}</time>
               <div class="event__type">
                 <img class="event__type-icon" width="42" height="42" src="img/icons/${type}.png" alt="Event type icon">
               </div>
               <h3 class="event__title">${type} ${place}</h3>
               <div class="event__schedule">
                 <p class="event__time">
-                  <time class="event__start-time" datetime="2019-03-18T10:30">${letFormatTimeShort(startTime)}</time>
+                  <time class="event__start-time" datetime="2019-03-18T10:30">${formatTimeShort(startTime)}</time>
                   &mdash;
-                  <time class="event__end-time" datetime="2019-03-18T11:00">${letFormatTimeShort(endTime)}</time>
+                  <time class="event__end-time" datetime="2019-03-18T11:00">${formatTimeShort(endTime)}</time>
                 </p>
-                <p class="event__duration">${letFormatDuration(duration)}</p>
+                <p class="event__duration">${formatDuration(duration)}</p>
               </div>
               <p class="event__price">
                 &euro;&nbsp;<span class="event__price-value">${basePrice}</span>

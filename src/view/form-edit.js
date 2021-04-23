@@ -1,4 +1,4 @@
-import {letFormatTimeLong} from '../utils/date-format.js';
+import {formatTimeLong} from '../utils/date-format.js';
 import {generateTripPoint} from '../mock/trip-point';
 import AbstractView from './abstract.js';
 
@@ -96,10 +96,10 @@ const createFormEditingTemplate = (point = generateTripPoint()) => {
 
                 <div class="event__field-group  event__field-group--time">
                   <label class="visually-hidden" for="event-start-time-1">From</label>
-                  <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="${letFormatTimeLong(startTime)}">
+                  <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="${formatTimeLong(startTime)}">
                   &mdash;
                   <label class="visually-hidden" for="event-end-time-1">To</label>
-                  <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="${letFormatTimeLong(endTime)}">
+                  <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="${formatTimeLong(endTime)}">
                 </div>
 
                 <div class="event__field-group  event__field-group--price">
