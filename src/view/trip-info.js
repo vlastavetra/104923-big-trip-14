@@ -1,5 +1,5 @@
-import dayjs from 'dayjs';
-import {createElement} from '../utils.js';
+import AbstractView from './abstract.js';
+import {formatDate} from '../utils/date-format.js';
 
 const createTripMainInfoTemplate = (points) => {
   const getTripRoute = (points) => {
@@ -8,8 +8,8 @@ const createTripMainInfoTemplate = (points) => {
   };
 
   const getTripPeriod = (startTime, endTime) => {
-    const tripStartDate = dayjs(startTime).format('D MMM');
-    const tripEndDate = dayjs(endTime).format('D MMM');
+    const tripStartDate = formatDate(startTime);
+    const tripEndDate = formatDate(endTime);
 
     return `${tripStartDate} – ${tripEndDate}`;
   };
@@ -27,25 +27,13 @@ const createTripMainInfoTemplate = (points) => {
           </section>`;
 };
 
-export default class TripInfo {
+export default class TripInfo extends AbstractView {
   constructor(points) {
+    super();
     this._data = points;
-    this._element = null;
   }
 
   getTemplate() {
     return createTripMainInfoTemplate(this._data);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

@@ -1,4 +1,5 @@
-import {getRandomInt, getRandomeFlag, getRandomElement, getRandomTime, getRandomLinksArr, filtredByFlag} from '../utils.js';
+import {getRandomInt, getRandomeFlag, getRandomElement, getRandomTime, getRandomLinksArr, noop} from '../utils/random';
+import {filtredByFlag} from '../utils/filter';
 
 const pointType = ['Check-in', 'Sightseeing', 'Restaurant', 'Taxi', 'Bus', 'Train', 'Ship', 'Transport', 'Drive', 'Flight'];
 const pointName = ['Amsterdam', 'Berlin', 'Barcelona', 'Lisboa', 'Budapest'];
@@ -18,7 +19,12 @@ const PhotosLimit = {
 };
 const TimeLimit = {
   MIN: 10,
-  MAX: 3000,
+  MAX: 1000,
+};
+
+const MinTimeGap = {
+  MIN: 24,
+  MAX: 36,
 };
 
 export const offersByTypes = {
@@ -215,9 +221,9 @@ export const generateTripPoint = () => {
   const id = getRandomInt();
   const type = getRandomElement(pointType);
   const place = getRandomElement(pointName);
-  const startTime = getRandomTime();
+  const startTime = getRandomTime(getRandomInt(MinTimeGap.MIN, MinTimeGap.MAX));
   const duration = getRandomInt(TimeLimit.MIN, TimeLimit.MAX);
-  const endTime = getRandomTime(startTime, duration);
+  const endTime = getRandomTime(noop, startTime, duration);
   const basePrice = getRandomInt(PriceLimit.MIN, PriceLimit.MAX);
   const destinationText = mockText.split('.').splice(0, getRandomInt(SentencesLimit.MIN, SentencesLimit.MAX));
   const destinationPhotos = renderPhotos(getRandomLinksArr(photoSource, PhotosLimit.MIN, PhotosLimit.MAX));
