@@ -1,5 +1,6 @@
 import {getRandomInt, getRandomeFlag, getRandomElement, getRandomTime, getRandomLinksArr, noop} from '../utils/random';
 import {filtredByFlag} from '../utils/filter';
+import {nanoid} from 'nanoid';
 
 const pointType = ['Check-in', 'Sightseeing', 'Restaurant', 'Taxi', 'Bus', 'Train', 'Ship', 'Transport', 'Drive', 'Flight'];
 const pointName = ['Amsterdam', 'Berlin', 'Barcelona', 'Lisboa', 'Budapest'];
@@ -218,7 +219,7 @@ const renderPhotos = (arr) => {
 };
 
 export const generateTripPoint = () => {
-  const id = getRandomInt();
+  const id = nanoid();
   const type = getRandomElement(pointType);
   const place = getRandomElement(pointName);
   const startTime = getRandomTime(getRandomInt(MinTimeGap.MIN, MinTimeGap.MAX));
@@ -227,7 +228,7 @@ export const generateTripPoint = () => {
   const basePrice = getRandomInt(PriceLimit.MIN, PriceLimit.MAX);
   const destinationText = mockText.split('.').splice(0, getRandomInt(SentencesLimit.MIN, SentencesLimit.MAX));
   const destinationPhotos = renderPhotos(getRandomLinksArr(photoSource, PhotosLimit.MIN, PhotosLimit.MAX));
-  const isFavourite = getRandomeFlag();
+  const isFavorite = getRandomeFlag();
   const chekedOffers = renderChekedOffers(type);
   const allOffers = renderAllOffers(type, id);
 
@@ -241,7 +242,7 @@ export const generateTripPoint = () => {
     basePrice,
     destinationText,
     destinationPhotos,
-    isFavourite,
+    isFavorite,
     chekedOffers,
     allOffers,
   };
