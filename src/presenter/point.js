@@ -92,7 +92,7 @@ export default class Point {
   _handleEditClick() {
     if (this._mode === Mode.EDITING) {
       this._replaceFormToPoint();
-    } else {this._replacePointToForm();}
+    } this._replacePointToForm();
   }
 
   _handleFavoriteClick() {

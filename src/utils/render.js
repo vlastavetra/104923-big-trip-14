@@ -31,7 +31,10 @@ export const createElement = (template) => {
   return newElement.firstChild;
 };
 
-export const replace = (newChild, currentChild) => {
+export const replace = (a, b) => {
+  let newChild = a;
+  let currentChild = b;
+
   if (currentChild instanceof Abstract) {
     currentChild = currentChild.getElement();
   }
