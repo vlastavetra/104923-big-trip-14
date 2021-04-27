@@ -31,6 +31,46 @@ export const createElement = (template) => {
   return newElement.firstChild;
 };
 
-export const replace = (parent, currentChild, newChild) => {
-  parent.replaceChild(currentChild.getElement(), newChild.getElement());
+export const replace = (a, b) => {
+  let newChild = a;
+  let currentChild = b;
+
+  if (currentChild instanceof Abstract) {
+    currentChild = currentChild.getElement();
+  }
+
+  if (newChild instanceof Abstract) {
+    newChild = newChild.getElement();
+  }
+
+  const parent = currentChild.parentElement;
+
+  if (!parent || !currentChild || !newChild) {
+    throw new Error('Can\'t replace unexisting elements');
+  }
+
+  parent.replaceChild(newChild, currentChild);
+};
+
+export const remove = (component) => {
+  if (!(component instanceof Abstract)) {
+    throw new Error('Can remove only components');
+  }
+
+  component.getElement().remove();
+  component.removeElement();
+};
+
+export const updateItem = (items, update) => {
+  const index = items.findIndex((item) => item.id === update.id);
+
+  if (index === -1) {
+    return items;
+  }
+
+  return [
+    ...items.slice(0, index),
+    update,
+    ...items.slice(index + 1),
+  ];
 };
