@@ -19,10 +19,10 @@ export const sortByPrice = (a, b) => {
 };
 
 export const sortByTime = (a, b) => {
-  if (a.duration < b.duration) {
+  if (a.timeDiff < b.timeDiff) {
     return 1;
   }
-  if (a.duration > b.duration) {
+  if (a.timeDiff > b.timeDiff) {
     return -1;
   }
   return 0;

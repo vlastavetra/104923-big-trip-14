@@ -12,6 +12,8 @@ const pointCounts = {
 
 const points = new Array(getRandomInt(pointCounts.MIN, pointCounts.MAX)).fill().map(generateTripPoint).sort(sortByDate);
 
+window.__points__ = points;
+
 const mainElement = document.querySelector('.trip-main');
 const navigationElement = mainElement.querySelector('.trip-controls__navigation');
 const filtersElement = mainElement.querySelector('.trip-controls__filters');

@@ -74,3 +74,7 @@ export const updateItem = (items, update) => {
     ...items.slice(index + 1),
   ];
 };
+
+export const capitalizeString = (str) => {
+  return str.split('')[0].toUpperCase() + str.slice(1);
+};

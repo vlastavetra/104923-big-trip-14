@@ -22,4 +22,9 @@ export const getRandomLinksArr = (element, MIN, MAX) => {
   return arr;
 };
 
+export const getRandomProperty = (obj) => {
+  const keys = Object.keys(obj);
+  return obj[keys[getRandomInt(0, keys.length - 1)]];
+};
+
 export const noop = () => {};
