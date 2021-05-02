@@ -1,31 +1,60 @@
-import {getRandomInt, getRandomeFlag, getRandomElement, getRandomTime, getRandomLinksArr, noop} from '../utils/random';
+import {getRandomInt, getRandomeFlag, getRandomElement, getRandomLinksArr, getRandomProperty} from '../utils/random';
 import {filtredByFlag} from '../utils/filter';
 import {nanoid} from 'nanoid';
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
+
+dayjs.extend(duration);
 
 const pointType = ['Check-in', 'Sightseeing', 'Restaurant', 'Taxi', 'Bus', 'Train', 'Ship', 'Transport', 'Drive', 'Flight'];
 const pointName = ['Amsterdam', 'Berlin', 'Barcelona', 'Lisboa', 'Budapest'];
-const mockText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget. Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante. Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum. Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui. Sed sed nisi sed augue convallis suscipit in sed felis. Aliquam erat volutpat. Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus.';
 const photoSource = 'http://picsum.photos/248/152?r=';
 const PriceLimit = {
   MIN: 10,
   MAX: 100,
 };
-const SentencesLimit = {
-  MIN: 1,
-  MAX: 5,
-};
 const PhotosLimit = {
   MIN: 1,
   MAX: 10,
 };
-const TimeLimit = {
-  MIN: 10,
-  MAX: 1000,
+const DurationDays = {
+  MIN: 0,
+  MAX: 3,
 };
 
-const MinTimeGap = {
-  MIN: 24,
-  MAX: 36,
+const renderPhotos = (arr) => {
+  const result = arr.reduce((acc, el) => {
+    return acc + `<img class="event__photo" src="${el}" alt="Event photo">`;
+  }, '');
+  return result;
+};
+
+export const destinations = {
+  Amsterdam: {
+    name: 'Amsterdam',
+    description: 'Cтолица Нидерландов, известная сложной сетью каналов, узкими домами с остроконечными крышами и богатым художественным наследием, в том числе XVII века, ставшего золотым в истории этой страны. В городе есть Музейная площадь, где расположены Музей Ван Гога, Рейксмузеум с картинами Рембрандта и Вермеера и Городской музей Амстердама, посвященный современному искусству. Также в Амстердаме очень популярны велосипеды, и здесь большое количество велодорожек.',
+    photos: renderPhotos(getRandomLinksArr(photoSource, PhotosLimit.MIN, PhotosLimit.MAX)),
+  },
+  Berlin: {
+    name: 'Berlin',
+    description: 'Столица Германии, история которой восходит к XIII в. О непростой истории города в XX в. напоминают Мемориал жертвам Холокоста и граффити на руинах Берлинской стены. Бранденбургские ворота, возведенные в XVIII в., известны как символ воссоединения Берлина, разделенного во время Холодной войны на две части. Также город славится своими художественными галереями и современными достопримечательностями, например построенной в 1963 г. филармонией золотого цвета с крышей в форме циркового шатра.',
+    photos: renderPhotos(getRandomLinksArr(photoSource, PhotosLimit.MIN, PhotosLimit.MAX)),
+  },
+  Barcelona: {
+    name: 'Barcelona',
+    description: 'Столица автономной области Каталония. Этот многонациональный город знаменит своей архитектурой и искусством. Одни из главных достопримечательностей – здания архитектора Антонио Гауди, например храм Святого Семейства. Также в городе находятся музеи современного искусства: Музей Пикассо и Фонд Жоана Миро. В Музее истории Барселоны можно посмотреть не только экспонаты, относящиеся к римскому периоду, но и места археологических раскопок в подземной части.',
+    photos: renderPhotos(getRandomLinksArr(photoSource, PhotosLimit.MIN, PhotosLimit.MAX)),
+  },
+  Lisboa: {
+    name: 'Lisboa',
+    description: 'Столица Португалии, расположенная на нескольких холмах и омываемая водами Атлантического океана. Из величественного замка Святого Георгия открывается запоминающийся вид на здания пастельных цветов в старом городе, устье реки Тахо и висячий мост Двадцать пятого апреля. В экспозиции Национального музея азулежу представлены португальские изразцы, созданные на протяжении пяти веков. Близ Лиссабона расположены пляжные курорты Кашкайш и Эшторил.',
+    photos: renderPhotos(getRandomLinksArr(photoSource, PhotosLimit.MIN, PhotosLimit.MAX)),
+  },
+  Budapest: {
+    name: 'Budapest',
+    description: 'Столица Венгрии, разделенная на две части рекой Дунай. Цепной мост, построенный в XIX веке, соединяет холмистый район Буда и равнинный Пешт. На фуникулере можно подняться на Крепостную гору, где находится Старый город района Буда и Музей истории Будапешта, коллекция которого знакомит с историей города начиная с римской эпохи. На площади Святой Троицы расположена церковь Матьяша, построенная в XIII веке, и Рыбацкий бастион, с башен которого открывается великолепный вид на город.',
+    photos: renderPhotos(getRandomLinksArr(photoSource, PhotosLimit.MIN, PhotosLimit.MAX)),
+  },
 };
 
 export const offersByTypes = {
@@ -196,7 +225,7 @@ const renderChekedOffers = (type) => {
   return result;
 };
 
-const renderAllOffers = (type, id) => {
+export const renderAllOffers = (type, id) => {
   const result = offersByTypes[type].reduce((acc, el) => {
     return acc + `<div class="event__offer-selector">
                     <input class="event__offer-checkbox  visually-hidden" id="event-offer-${el.id}-${id}" type="checkbox" name="event-offer-${el.id}" ${el.isChecked === true ? 'checked' : ''}>
@@ -211,39 +240,66 @@ const renderAllOffers = (type, id) => {
   return result;
 };
 
-const renderPhotos = (arr) => {
+const renderOptions = (arr) => {
   const result = arr.reduce((acc, el) => {
-    return acc + `<img class="event__photo" src="${el}" alt="Event photo">`;
+    return acc + `<option value="${el}"></option>`;
   }, '');
   return result;
+};
+
+const getTripPeriod = () => {
+  const tripDuration = getRandomInt(DurationDays.MIN, DurationDays.MAX);
+  const start = dayjs().add(getRandomInt(DurationDays.MIN, DurationDays.MAX), 'day').add(getRandomInt(0, 24), 'hour').add(getRandomInt(0, 60), 'minute');
+  const end = start.add(tripDuration, 'day').add(getRandomInt(0, 24), 'hour').add(getRandomInt(0, 60), 'minute');
+
+  return [start, end];
+};
+
+const getTimeDiff = (startDate, endDate) => {
+  const time =  endDate.diff(startDate);
+  const tripDuration = dayjs.duration(time);
+  const days = tripDuration.days();
+  const hours = tripDuration.hours();
+  const minutes = tripDuration.minutes();
+
+  return `
+      ${days > 0 ? days + 'D' : ''}
+      ${hours > 0 ? hours + 'H' : ''}
+      ${minutes > 0 ? minutes + 'M' : ''}
+    `;
 };
 
 export const generateTripPoint = () => {
   const id = nanoid();
   const type = getRandomElement(pointType);
-  const place = getRandomElement(pointName);
-  const startTime = getRandomTime(getRandomInt(MinTimeGap.MIN, MinTimeGap.MAX));
-  const duration = getRandomInt(TimeLimit.MIN, TimeLimit.MAX);
-  const endTime = getRandomTime(noop, startTime, duration);
+
+  const destination = getRandomProperty(destinations);
+  const destinationName = destination.name;
+  const destinationDescription = destination.description;
+  const destinationPhotos = destination.photos;
+
+  const [start, end] = getTripPeriod();
+  const startTime = start.toDate();
+  const endTime = end.toDate();
+  const timeDiff = getTimeDiff(start, end);
+
   const basePrice = getRandomInt(PriceLimit.MIN, PriceLimit.MAX);
-  const destinationText = mockText.split('.').splice(0, getRandomInt(SentencesLimit.MIN, SentencesLimit.MAX));
-  const destinationPhotos = renderPhotos(getRandomLinksArr(photoSource, PhotosLimit.MIN, PhotosLimit.MAX));
+  const pointOptions = renderOptions(pointName);
   const isFavorite = getRandomeFlag();
   const chekedOffers = renderChekedOffers(type);
-  const allOffers = renderAllOffers(type, id);
 
   return {
     id,
     type,
-    place,
-    startTime,
-    duration,
-    endTime,
-    basePrice,
-    destinationText,
+    destinationName,
+    destinationDescription,
     destinationPhotos,
+    startTime,
+    endTime,
+    timeDiff,
+    basePrice,
+    pointOptions,
     isFavorite,
     chekedOffers,
-    allOffers,
   };
 };

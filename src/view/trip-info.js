@@ -3,7 +3,7 @@ import {formatDate} from '../utils/date-format.js';
 
 const createTripMainInfoTemplate = (points) => {
   const getTripRoute = (points) => {
-    const place = [...new Set(points.map((point) => point.place))];
+    const place = [...new Set(points.map((point) => point.destinationName))];
     return place.join(' — ');
   };
 
