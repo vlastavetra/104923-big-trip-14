@@ -1,5 +1,5 @@
-import AbstractView from './abstract.js';
-import {formatDate} from '../utils/date-format.js';
+import AbstractView from './abstract';
+import {formatDate} from '../utils/date-format';
 
 const createTripMainInfoTemplate = (points) => {
   const getTripRoute = (points) => {
