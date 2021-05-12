@@ -1,5 +1,5 @@
-import SiteMenuView from '../view/site-menu.js';
-import {render, RenderPosition} from '../utils/render.js';
+import SiteMenuView from '../view/site-menu';
+import {render, RenderPosition} from '../utils/render';
 
 export default class SiteNemu {
   constructor(siteMenuContainer) {

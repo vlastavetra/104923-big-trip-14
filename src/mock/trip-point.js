@@ -1,5 +1,4 @@
 import {getRandomInt, getRandomeFlag, getRandomElement, getRandomLinksArr, getRandomProperty} from '../utils/random';
-import {filtredByFlag} from '../utils/filter';
 import {nanoid} from 'nanoid';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
@@ -60,184 +59,182 @@ export const destinations = {
 export const offersByTypes = {
   'Check-in': [
     {
-      id: 'breakfast',
+      id: 0,
+      name: 'breakfast',
       title: 'Add breakfast',
       cost: getRandomInt(PriceLimit.MIN, PriceLimit.MAX),
       isChecked: getRandomeFlag(),
     }],
   Sightseeing: [
     {
-      id: 'tickets',
+      id: 0,
+      name: 'tickets',
       title: 'Book tickets',
       cost: getRandomInt(PriceLimit.MIN, PriceLimit.MAX),
       isChecked: getRandomeFlag(),
     },
     {
-      id: 'lunch',
+      id: 1,
+      name: 'lunch',
       title: 'Lunch in city',
       cost: getRandomInt(PriceLimit.MIN, PriceLimit.MAX),
       isChecked: getRandomeFlag(),
     }],
   Restaurant: [
     {
-      id: 'tips',
+      id: 0,
+      name: 'tips',
       title: 'Tips',
       cost: getRandomInt(PriceLimit.MIN, PriceLimit.MAX),
       isChecked: getRandomeFlag(),
     }],
   Taxi: [
     {
-      id: 'uber',
+      id: 0,
+      name: 'uber',
       title: 'Order Uber',
       cost: getRandomInt(PriceLimit.MIN, PriceLimit.MAX),
       isChecked: getRandomeFlag(),
     }],
   Bus: [
     {
-      id: 'comfort',
+      id: 0,
+      name: 'comfort',
       title: 'Switch to comfort',
       cost: getRandomInt(PriceLimit.MIN, PriceLimit.MAX),
       isChecked: getRandomeFlag(),
     },
     {
-      id: 'meal',
+      id: 1,
+      name: 'meal',
       title: 'Add meal',
       cost: getRandomInt(PriceLimit.MIN, PriceLimit.MAX),
       isChecked: getRandomeFlag(),
     },
     {
-      id: 'seats',
+      id: 2,
+      name: 'seats',
       title: 'Choose seats',
       cost: getRandomInt(PriceLimit.MIN, PriceLimit.MAX),
       isChecked: getRandomeFlag(),
     }],
   Train: [
     {
-      id: 'comfort',
+      id: 0,
+      name: 'comfort',
       title: 'Switch to comfort',
       cost: getRandomInt(PriceLimit.MIN, PriceLimit.MAX),
       isChecked: getRandomeFlag(),
     },
     {
-      id: 'meal',
+      id: 1,
+      name: 'meal',
       title: 'Add meal',
       cost: getRandomInt(PriceLimit.MIN, PriceLimit.MAX),
       isChecked: getRandomeFlag(),
     },
     {
-      id: 'seats',
+      id: 2,
+      name: 'seats',
       title: 'Choose seats',
       cost: getRandomInt(PriceLimit.MIN, PriceLimit.MAX),
       isChecked: getRandomeFlag(),
     }],
   Ship: [
     {
-      id: 'comfort',
+      id: 0,
+      name: 'comfort',
       title: 'Switch to comfort',
       cost: getRandomInt(PriceLimit.MIN, PriceLimit.MAX),
       isChecked: getRandomeFlag(),
     },
     {
-      id: 'meal',
+      id: 1,
+      name: 'meal',
       title: 'Add meal',
       cost: getRandomInt(PriceLimit.MIN, PriceLimit.MAX),
       isChecked: getRandomeFlag(),
     },
     {
-      id: 'seats',
+      id: 2,
+      name: 'seats',
       title: 'Choose seats',
       cost: getRandomInt(PriceLimit.MIN, PriceLimit.MAX),
       isChecked: getRandomeFlag(),
     }],
   Transport: [
     {
-      id: 'luggage',
+      id: 0,
+      name: 'luggage',
       title: 'Add luggage',
       cost: getRandomInt(PriceLimit.MIN, PriceLimit.MAX),
       isChecked: getRandomeFlag(),
     },
     {
-      id: 'comfort',
+      id: 1,
+      name: 'comfort',
       title: 'Switch to comfort',
       cost: getRandomInt(PriceLimit.MIN, PriceLimit.MAX),
       isChecked: getRandomeFlag(),
     },
     {
-      id: 'meal',
+      id: 2,
+      name: 'meal',
       title: 'Add meal',
       cost: getRandomInt(PriceLimit.MIN, PriceLimit.MAX),
       isChecked: getRandomeFlag(),
     },
     {
-      id: 'seats',
+      id: 3,
+      name: 'seats',
       title: 'Choose seats',
       cost: getRandomInt(PriceLimit.MIN, PriceLimit.MAX),
       isChecked: getRandomeFlag(),
     }],
   Drive: [
     {
-      id: 'car',
+      id: 0,
+      name: 'car',
       title: 'Rent a car',
       cost: getRandomInt(PriceLimit.MIN, PriceLimit.MAX),
       isChecked: getRandomeFlag(),
     }],
   Flight: [
     {
-      id: 'luggage',
+      id: 1,
+      name: 'luggage',
       title: 'Add luggage',
       cost: getRandomInt(PriceLimit.MIN, PriceLimit.MAX),
       isChecked: getRandomeFlag(),
     },
     {
-      id: 'comfort',
+      id: 2,
+      name: 'comfort',
       title: 'Switch to comfort',
       cost: getRandomInt(PriceLimit.MIN, PriceLimit.MAX),
       isChecked: getRandomeFlag(),
     },
     {
-      id: 'meal',
+      id: 3,
+      name: 'meal',
       title: 'Add meal',
       cost: getRandomInt(PriceLimit.MIN, PriceLimit.MAX),
       isChecked: getRandomeFlag(),
     },
     {
-      id: 'seats',
+      id: 4,
+      name: 'seats',
       title: 'Choose seats',
       cost: getRandomInt(PriceLimit.MIN, PriceLimit.MAX),
       isChecked: getRandomeFlag(),
     },
     {
-      id: 'train',
+      id: 5,
+      name: 'train',
       title: 'Travel by train',
       cost: getRandomInt(PriceLimit.MIN, PriceLimit.MAX),
       isChecked: getRandomeFlag(),
     }],
-};
-
-const renderChekedOffers = (type) => {
-  const result = offersByTypes[type].filter(filtredByFlag).reduce((acc, el) => {
-    return acc + `<li class="event__offer">
-                    <span class="event__offer-title">${el.title}</span>
-                    &plus;&euro;&nbsp;
-                    <span class="event__offer-price">${el.cost}</span>
-                  </li>`;
-  }, '');
-  return result;
-};
-
-export const renderAllOffers = (type, id) => {
-  const result = offersByTypes[type].reduce((acc, el) => {
-    return acc + `<div class="event__offer-selector">
-                    <input class="event__offer-checkbox  visually-hidden" id="event-offer-${el.id}-${id}" type="checkbox" name="event-offer-${el.id}" ${el.isChecked === true ? 'checked' : ''}>
-                    <label class="event__offer-label" for="event-offer-${el.id}-${id}">
-                      <span class="event__offer-title">${el.title}</span>
-                      &plus;&euro;&nbsp;
-                      <span class="event__offer-price">${el.cost}</span>
-                    </label>
-                  </div>`;
-  }, '');
-
-  return result;
 };
 
 const renderOptions = (arr) => {
@@ -249,7 +246,7 @@ const renderOptions = (arr) => {
 
 const getTripPeriod = () => {
   const tripDuration = getRandomInt(DurationDays.MIN, DurationDays.MAX);
-  const start = dayjs().add(getRandomInt(DurationDays.MIN, DurationDays.MAX), 'day').add(getRandomInt(0, 24), 'hour').add(getRandomInt(0, 60), 'minute');
+  const start = dayjs().subtract(getRandomInt(DurationDays.MIN, DurationDays.MAX), 'day').add(getRandomInt(0, 24), 'hour').add(getRandomInt(0, 60), 'minute');
   const end = start.add(tripDuration, 'day').add(getRandomInt(0, 24), 'hour').add(getRandomInt(0, 60), 'minute');
 
   return [start, end];
@@ -272,6 +269,7 @@ const getTimeDiff = (startDate, endDate) => {
 export const generateTripPoint = () => {
   const id = nanoid();
   const type = getRandomElement(pointType);
+  const allOffers = offersByTypes[type];
 
   const destination = getRandomProperty(destinations);
   const destinationName = destination.name;
@@ -286,7 +284,6 @@ export const generateTripPoint = () => {
   const basePrice = getRandomInt(PriceLimit.MIN, PriceLimit.MAX);
   const pointOptions = renderOptions(pointName);
   const isFavorite = getRandomeFlag();
-  const chekedOffers = renderChekedOffers(type);
 
   return {
     id,
@@ -300,6 +297,41 @@ export const generateTripPoint = () => {
     basePrice,
     pointOptions,
     isFavorite,
-    chekedOffers,
+    allOffers,
+  };
+};
+
+export const generateEmptyTripPoint = () => {
+  const id = nanoid();
+  const type = pointType[0];
+  const allOffers = offersByTypes[type];
+
+  const destination = destinations[pointName[0]];
+  const destinationName = destination.name;
+  const destinationDescription = destination.description;
+  const destinationPhotos = destination.photos;
+
+  const [start, end] = getTripPeriod();
+  const startTime = start.toDate();
+  const endTime = end.toDate();
+  const timeDiff = getTimeDiff(start, end);
+
+  const basePrice = '';
+  const pointOptions = renderOptions(pointName);
+  const isNewPoint = true;
+
+  return {
+    id,
+    type,
+    destinationName,
+    destinationDescription,
+    destinationPhotos,
+    startTime,
+    endTime,
+    timeDiff,
+    basePrice,
+    pointOptions,
+    isNewPoint,
+    allOffers,
   };
 };

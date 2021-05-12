@@ -1,8 +1,23 @@
-import {formatDate, formatTimeShort} from '../utils/date-format.js';
-import AbstractView from './abstract.js';
+import he from 'he';
+import {formatDate, formatTimeShort} from '../utils/date-format';
+import AbstractView from './abstract';
+import {filtredByFlag} from '../utils/filter';
 
 const createTripItemsTemplate = (points) => {
-  const {type, destinationName, startTime, timeDiff, endTime, basePrice, isFavorite, chekedOffers} = points;
+  const {type, destinationName, startTime, timeDiff, endTime, basePrice, isFavorite, allOffers} = points;
+
+  const renderChekedOffers = (allOffers) => {
+    const result = allOffers.filter(filtredByFlag).reduce((acc, el) => {
+      return acc + `<li class="event__offer">
+                      <span class="event__offer-title">${el.title}</span>
+                      &plus;&euro;&nbsp;
+                      <span class="event__offer-price">${el.cost}</span>
+                    </li>`;
+    }, '');
+    return result;
+  };
+
+  const chekedOffers = renderChekedOffers(allOffers);
 
   const favoriteClassName = isFavorite
     ? 'event__favorite-btn--active'
@@ -14,7 +29,7 @@ const createTripItemsTemplate = (points) => {
               <div class="event__type">
                 <img class="event__type-icon" width="42" height="42" src="img/icons/${type}.png" alt="Event type icon">
               </div>
-              <h3 class="event__title">${type} ${destinationName}</h3>
+              <h3 class="event__title">${type} ${he.encode(destinationName)}</h3>
               <div class="event__schedule">
                 <p class="event__time">
                   <time class="event__start-time" datetime="2019-03-18T10:30">${formatTimeShort(startTime)}</time>
