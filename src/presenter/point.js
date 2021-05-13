@@ -16,6 +16,7 @@ export default class Point {
     this._handleEditClick = this._handleEditClick.bind(this);
     this._handleFavoriteClick = this._handleFavoriteClick.bind(this);
     this._handleFormSubmit = this._handleFormSubmit.bind(this);
+    this._handleCloseFormClick = this._handleCloseFormClick.bind(this);
     this._handleDeleteClick = this._handleDeleteClick.bind(this);
     this._escKeyDownHandler = this._escKeyDownHandler.bind(this);
   }
@@ -35,6 +36,8 @@ export default class Point {
     this._pointComponent.setFavoriteClickHandler(this._handleFavoriteClick);
     this._pointEditComponent.setFormSubmitHandler(this._handleFormSubmit);
     this._pointEditComponent.setDeleteClickHandler(this._handleDeleteClick);
+
+    this._pointEditComponent.setEditFormCloseHandler(this._handleCloseFormClick);
 
     if (prevPointComponent === null || prevPointEditComponent === null) {
       render(this._pointContainer, this._pointComponent, RenderPosition.BEFOREEND);
@@ -70,10 +73,6 @@ export default class Point {
     document.addEventListener('keydown', this._escKeyDownHandler);
     this._changeMode();
     this._mode = Mode.EDITING;
-
-    this._pointEditComponent.setEditClickHandler(this._handleEditClick);
-    this._pointEditComponent.setFormSubmitHandler(this._handleFormSubmit);
-    this._pointEditComponent.setDeleteClickHandler(this._handleDeleteClick);
   }
 
   _replaceFormToPoint() {
@@ -126,5 +125,10 @@ export default class Point {
       UpdateType.MINOR,
       point,
     );
+  }
+
+  _handleCloseFormClick() {
+    this._pointEditComponent.reset(this._point);
+    this._replaceFormToPoint();
   }
 }
