@@ -170,6 +170,7 @@ export default class FormEdit extends SmartView{
     this._editClickHandler = this._editClickHandler.bind(this);
     this._formSubmitHandler = this._formSubmitHandler.bind(this);
     this._formDeleteClickHandler = this._formDeleteClickHandler.bind(this);
+    this._closeEditFormHandler = this._closeEditFormHandler.bind(this);
     this._priceInputHandler = this._priceInputHandler.bind(this);
     this._eventTypeSelectHandler = this._eventTypeSelectHandler.bind(this);
     this._destinationChangeHandler = this._destinationChangeHandler.bind(this);
@@ -345,14 +346,18 @@ export default class FormEdit extends SmartView{
     this.getElement().querySelector('form').addEventListener('submit', this._formSubmitHandler);
   }
 
-  setEditClickHandler(callback) {
-    this._callback.editClick = callback;
-    this.getElement().querySelector('.event__rollup-btn').addEventListener('click', this._editClickHandler);
+  _closeEditFormHandler() {
+    this._callback.closeEditForm();
+  }
+
+  setEditFormCloseHandler(callback) {
+    this._callback.closeEditForm = callback;
+    this.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, this._closeEditFormHandler);
   }
 
   restoreHandlers() {
     this._setInnerHandlers();
-    this.setEditClickHandler(this._callback.editClick);
+    this.setEditFormCloseHandler(this._callback.closeEditForm);
     this.setFormSubmitHandler(this._callback.formSubmit);
     this.setDeleteClickHandler(this._callback.deleteClick);
     this._setDatepicker();
