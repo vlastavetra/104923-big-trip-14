@@ -1,7 +1,6 @@
 import he from 'he';
 import {formatDate, formatTimeShort} from '../utils/date-format';
 import AbstractView from './abstract';
-import {filtredByFlag} from '../utils/filter';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 
@@ -37,7 +36,7 @@ const createTripItemsTemplate = (points) => {
       `;
   };
 
-  const timeDiff = getTimeDiff(startTime, endTime)
+  const timeDiff = getTimeDiff(startTime, endTime);
 
   const chekedOffers = renderChekedOffers(allOffers);
 

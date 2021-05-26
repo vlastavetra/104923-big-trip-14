@@ -28,7 +28,6 @@ export default class Stats {
   _renderStats() {
     const tripPoints = this._pointsModel.getPoints();
     this._statsComponent = new StatsView(tripPoints);
-    console.log(this._statsContainer)
     render(this._statsContainer, this._statsComponent, RenderPosition.BEFOREEND);
   }
 }

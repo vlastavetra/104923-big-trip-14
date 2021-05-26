@@ -4,9 +4,9 @@ import {render, RenderPosition, replace, remove} from '../utils/render';
 import {UserAction, UpdateType, Mode} from '../const';
 
 export const State = {
-  SAVING: `SAVING`,
-  DELETING: `DELETING`,
-  ABORTING: `ABORTING`
+  SAVING: 'SAVING',
+  DELETING: 'DELETING',
+  ABORTING: 'ABORTING',
 };
 
 
@@ -79,7 +79,7 @@ export default class Point {
       this._tripEditComponent.updateData({
         isDisabled: false,
         isSaving: false,
-        isDeleting: false
+        isDeleting: false,
       });
     };
 
@@ -87,13 +87,13 @@ export default class Point {
       case State.SAVING:
         this._tripEditComponent.updateData({
           isDisabled: true,
-          isSaving: true
+          isSaving: true,
         });
         break;
       case State.DELETING:
         this._tripEditComponent.updateData({
           isDisabled: true,
-          isDeleting: true
+          isDeleting: true,
         });
         break;
       case State.ABORTING:

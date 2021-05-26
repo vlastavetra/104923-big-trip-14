@@ -44,7 +44,7 @@ export default class NewPoint {
   setSaving() {
     this._tripEditComponent.updateData({
       isDisabled: true,
-      isSaving: true
+      isSaving: true,
     });
   }
 
@@ -53,7 +53,7 @@ export default class NewPoint {
       this._tripEditComponent.updateData({
         isDisabled: false,
         isSaving: false,
-        isDeleting: false
+        isDeleting: false,
       });
     };
 

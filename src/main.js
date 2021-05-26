@@ -7,9 +7,8 @@ import FilterPresenter from './presenter/filter';
 import TripInfoPresenter from './presenter/trip-info';
 import StatsPresenter from './presenter/stat';
 import Api from './api';
-import DataStorage from './dataStorage';
-const AUTHORIZATION = `Basic vlv15h2IKissu6SH`;
-const END_POINT = `https://14.ecmascript.pages.academy/big-trip`;
+const AUTHORIZATION = 'Basic vlv15h2IKissu6SH';
+const END_POINT = 'https://14.ecmascript.pages.academy/big-trip';
 
 const api = new Api(END_POINT, AUTHORIZATION);
 const pointsModel = new PointsModel();
@@ -59,8 +58,7 @@ api.getAllData()
     filterPresenter.init();
     siteMenuPresenter.setMenuClickHandler(handleMenuClick);
   })
-  .catch((err) => {
-    console.log(err);
+  .catch(() => {
     pointsModel.setPoints(UpdateType.INIT, []);
     tripInfoPresenter.init();
     siteMenuPresenter.init();

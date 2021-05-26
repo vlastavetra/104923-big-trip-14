@@ -35,26 +35,26 @@ export const renderMoneyChart = (moneyCtx, points, labels) => {
         anchor: 'start',
         barThickness: 44,
         minBarLength: 50,
-      }]
+      }],
     },
     options: {
       plugins: {
         datalabels: {
           font: {
-            size: 13
+            size: 13,
           },
           color: Color.BLACK,
           anchor: 'end',
           align: 'start',
           formatter: (val) => `€ ${val}`,
-        }
+        },
       },
       title: {
         display: true,
         text: 'MONEY',
         fontColor: Color.BLACK,
         fontSize: 23,
-        position: 'left'
+        position: 'left',
       },
       scales: {
         yAxes: [{
@@ -65,7 +65,7 @@ export const renderMoneyChart = (moneyCtx, points, labels) => {
           },
           gridLines: {
             display: false,
-            drawBorder: false
+            drawBorder: false,
           },
         }],
         xAxes: [{
@@ -75,17 +75,17 @@ export const renderMoneyChart = (moneyCtx, points, labels) => {
           },
           gridLines: {
             display: false,
-            drawBorder: false
+            drawBorder: false,
           },
         }],
       },
       legend: {
-        display: false
+        display: false,
       },
       tooltips: {
         enabled: false,
-      }
-    }
+      },
+    },
   });
 };
 
@@ -108,26 +108,26 @@ export const renderTypeChart = (typeCtx, points, labels) => {
         anchor: 'start',
         barThickness: 44,
         minBarLength: 50,
-      }]
+      }],
     },
     options: {
       plugins: {
         datalabels: {
           font: {
-            size: 13
+            size: 13,
           },
           color: Color.BLACK,
           anchor: 'end',
           align: 'start',
           formatter: (val) => `${val}x`,
-        }
+        },
       },
       title: {
         display: true,
         text: 'TYPE',
         fontColor: Color.BLACK,
         fontSize: 23,
-        position: 'left'
+        position: 'left',
       },
       scales: {
         yAxes: [{
@@ -138,7 +138,7 @@ export const renderTypeChart = (typeCtx, points, labels) => {
           },
           gridLines: {
             display: false,
-            drawBorder: false
+            drawBorder: false,
           },
         }],
         xAxes: [{
@@ -148,17 +148,17 @@ export const renderTypeChart = (typeCtx, points, labels) => {
           },
           gridLines: {
             display: false,
-            drawBorder: false
+            drawBorder: false,
           },
         }],
       },
       legend: {
-        display: false
+        display: false,
       },
       tooltips: {
         enabled: false,
-      }
-    }
+      },
+    },
   });
 };
 

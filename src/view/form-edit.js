@@ -4,7 +4,6 @@ import {capitalizeString} from '../utils/render';
 import {generateEmptyTripPoint, offersByTypes, destinations} from '../mock/trip-point';
 import SmartView from './smart';
 import flatpickr from 'flatpickr';
-import dayjs from 'dayjs';
 
 import '../../node_modules/flatpickr/dist/flatpickr.min.css';
 
@@ -354,7 +353,7 @@ export default class FormEdit extends SmartView{
 
   setEditFormCloseHandler(callback) {
     this._callback.closeEditForm = callback;
-    this.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, this._closeEditFormHandler);
+    this.getElement().querySelector('.event__rollup-btn').addEventListener('click', this._closeEditFormHandler);
   }
 
   restoreHandlers() {

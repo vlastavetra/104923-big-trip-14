@@ -46,9 +46,9 @@ export default class Stats extends AbstractView {
   }
 
   _setCharts() {
-    const moneyCtx = this.getElement().querySelector(`.statistics__chart--money`);
-    const typeCtx = this.getElement().querySelector(`.statistics__chart--transport`);
-    const timeCtx = this.getElement().querySelector(`.statistics__chart--time`);
+    const moneyCtx = this.getElement().querySelector('.statistics__chart--money');
+    const typeCtx = this.getElement().querySelector('.statistics__chart--transport');
+    const timeCtx = this.getElement().querySelector('.statistics__chart--time');
 
     const types = [];
     this._data.forEach((point) => types.push(point.type.toUpperCase()));

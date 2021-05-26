@@ -1,16 +1,16 @@
-import PointsModel from "./model/points";
-import DataStorage from "./dataStorage";
+import PointsModel from './model/points';
+import DataStorage from './dataStorage';
 
 const Method = {
-  GET: `GET`,
-  PUT: `PUT`,
-  POST: `POST`,
-  DELETE: `DELETE`
+  GET: 'GET',
+  PUT: 'PUT',
+  POST: 'POST',
+  DELETE: 'DELETE',
 };
 
 const SuccessHTTPStatusRange = {
   MIN: 200,
-  MAX: 299
+  MAX: 299,
 };
 
 export default class Api {
@@ -20,18 +20,18 @@ export default class Api {
   }
 
   getPoints() {
-    return this._load({url: `points`})
+    return this._load({url: 'points'})
       .then(Api.toJSON)
       .then((points) => points.map(PointsModel.adaptToClient));
   }
 
   getOffers() {
-    return this._load({url: `offers`})
+    return this._load({url: 'offers'})
       .then(Api.toJSON);
   }
 
   getDestinations() {
-    return this._load({url: `destinations`})
+    return this._load({url: 'destinations'})
       .then(Api.toJSON);
   }
 
@@ -40,7 +40,7 @@ export default class Api {
       url: `points/${point.id}`,
       method: Method.PUT,
       body: JSON.stringify(PointsModel.adaptToServer(point)),
-      headers: new Headers({"Content-Type": `application/json`}),
+      headers: new Headers({'Content-Type': 'application/json'}),
     })
       .then(Api.toJSON)
       .then(PointsModel.adaptToClient);
@@ -48,10 +48,10 @@ export default class Api {
 
   addPoint(point) {
     return this._load({
-      url: `points`,
+      url: 'points',
       method: Method.POST,
       body: JSON.stringify(PointsModel.adaptToServer(point)),
-      headers: new Headers({"Content-Type": `application/json`})
+      headers: new Headers({'Content-Type': 'application/json'}),
     })
       .then(Api.toJSON)
       .then(PointsModel.adaptToClient);
@@ -60,7 +60,7 @@ export default class Api {
   deletePoint(point) {
     return this._load({
       url: `points/${point.id}`,
-      method: Method.DELETE
+      method: Method.DELETE,
     });
   }
 
@@ -69,7 +69,7 @@ export default class Api {
       .all([
         this.getPoints(),
         this.getOffers(),
-        this.getDestinations()
+        this.getDestinations(),
       ])
       .then(([points, offers, destinations]) => {
         DataStorage.setOffers(offers);
@@ -82,13 +82,13 @@ export default class Api {
     url,
     method = Method.GET,
     body = null,
-    headers = new Headers()
+    headers = new Headers(),
   }) {
-    headers.append(`Authorization`, this._authorization);
+    headers.append('Authorization', this._authorization);
 
     return fetch(
-        `${this._endPoint}/${url}`,
-        {method, body, headers}
+      `${this._endPoint}/${url}`,
+      {method, body, headers},
     )
       .then(Api.checkStatus)
       .catch(Api.catchError);

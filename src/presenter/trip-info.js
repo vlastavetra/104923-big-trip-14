@@ -40,8 +40,6 @@ export default class Info {
   _renderTripInfo() {
     const points = this._getSortedPoints();
     this._tripInfoComponent = new TripInfoView(points);
-    console.log(new TripInfoView(points))
-    console.log(this._mainContainer)
     render(this._mainContainer, this._tripInfoComponent, RenderPosition.AFTERBEGIN);
   }
 }
