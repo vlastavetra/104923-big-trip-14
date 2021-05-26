@@ -6,10 +6,16 @@ export default class SiteNemu {
     this._siteMenuContainer = siteMenuContainer;
 
     this._siteMenuComponent = new SiteMenuView();
+
+    this.setMenuClickHandler = this.setMenuClickHandler.bind(this);
   }
 
   init() {
     this._renderSiteMenu();
+  }
+
+  setMenuClickHandler(callback) {
+    this._siteMenuComponent.setMenuClickHandler(callback);
   }
 
   _renderSiteMenu() {

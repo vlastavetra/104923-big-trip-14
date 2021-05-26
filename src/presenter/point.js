@@ -3,6 +3,13 @@ import PointView from '../view/trip-point';
 import {render, RenderPosition, replace, remove} from '../utils/render';
 import {UserAction, UpdateType, Mode} from '../const';
 
+export const State = {
+  SAVING: `SAVING`,
+  DELETING: `DELETING`,
+  ABORTING: `ABORTING`
+};
+
+
 export default class Point {
   constructor(pointContainer, changeData, changeMode) {
     this._pointContainer = pointContainer;
@@ -64,6 +71,35 @@ export default class Point {
   resetView() {
     if (this._mode !== Mode.DEFAULT) {
       this._replaceFormToPoint();
+    }
+  }
+
+  setViewState(state) {
+    const resetFormState = () => {
+      this._tripEditComponent.updateData({
+        isDisabled: false,
+        isSaving: false,
+        isDeleting: false
+      });
+    };
+
+    switch (state) {
+      case State.SAVING:
+        this._tripEditComponent.updateData({
+          isDisabled: true,
+          isSaving: true
+        });
+        break;
+      case State.DELETING:
+        this._tripEditComponent.updateData({
+          isDisabled: true,
+          isDeleting: true
+        });
+        break;
+      case State.ABORTING:
+        this._tripComponent.shake(resetFormState);
+        this._tripEditComponent.shake(resetFormState);
+        break;
     }
   }
 

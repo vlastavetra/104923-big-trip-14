@@ -2,20 +2,42 @@ import he from 'he';
 import {formatDate, formatTimeShort} from '../utils/date-format';
 import AbstractView from './abstract';
 import {filtredByFlag} from '../utils/filter';
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
+
+dayjs.extend(duration);
 
 const createTripItemsTemplate = (points) => {
-  const {type, destinationName, startTime, timeDiff, endTime, basePrice, isFavorite, allOffers} = points;
+  const {type, destination, startTime, endTime, basePrice, isFavorite, allOffers} = points;
 
   const renderChekedOffers = (allOffers) => {
-    const result = allOffers.filter(filtredByFlag).reduce((acc, el) => {
+    const result = allOffers.reduce((acc, el) => {
       return acc + `<li class="event__offer">
                       <span class="event__offer-title">${el.title}</span>
                       &plus;&euro;&nbsp;
-                      <span class="event__offer-price">${el.cost}</span>
+                      <span class="event__offer-price">${el.price}</span>
                     </li>`;
     }, '');
     return result;
   };
+
+  const getTimeDiff = (startTime, endTime) => {
+    const start = dayjs(startTime);
+    const end = dayjs(endTime);
+    const time =  end.diff(start);
+    const tripDuration = dayjs.duration(time);
+    const days = tripDuration.days();
+    const hours = tripDuration.hours();
+    const minutes = tripDuration.minutes();
+
+    return `
+        ${days > 0 ? days + 'D' : ''}
+        ${hours > 0 ? hours + 'H' : ''}
+        ${minutes > 0 ? minutes + 'M' : ''}
+      `;
+  };
+
+  const timeDiff = getTimeDiff(startTime, endTime)
 
   const chekedOffers = renderChekedOffers(allOffers);
 
@@ -29,7 +51,7 @@ const createTripItemsTemplate = (points) => {
               <div class="event__type">
                 <img class="event__type-icon" width="42" height="42" src="img/icons/${type}.png" alt="Event type icon">
               </div>
-              <h3 class="event__title">${type} ${he.encode(destinationName)}</h3>
+              <h3 class="event__title">${type} ${he.encode(destination.name)}</h3>
               <div class="event__schedule">
                 <p class="event__time">
                   <time class="event__start-time" datetime="2019-03-18T10:30">${formatTimeShort(startTime)}</time>

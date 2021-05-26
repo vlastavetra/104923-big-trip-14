@@ -4,11 +4,13 @@ import {capitalizeString} from '../utils/render';
 import {generateEmptyTripPoint, offersByTypes, destinations} from '../mock/trip-point';
 import SmartView from './smart';
 import flatpickr from 'flatpickr';
+import dayjs from 'dayjs';
 
 import '../../node_modules/flatpickr/dist/flatpickr.min.css';
 
 const createFormEditingTemplate = (point) => {
-  const {id, type, allOffers, destinationName, destinationDescription, destinationPhotos, isSubmitDisabled, isDestinationInfo, startTime, endTime, basePrice, pointOptions, isNewPoint} = point;
+  const {id, type, allOffers, destination, isSubmitDisabled, isDestinationInfo, startTime, endTime, basePrice, pointOptions, isNewPoint} = point;
+
 
   const renderAllOffers = (allOffers) => {
     const result = allOffers.reduce((acc, el) => {
@@ -25,7 +27,7 @@ const createFormEditingTemplate = (point) => {
     return result;
   };
 
-  const offers = renderAllOffers(allOffers, id);
+  const offers = renderAllOffers(allOffers);
 
   return `<li class="trip-events__item">
             <form class="event event--edit" action="#" method="post">
@@ -108,7 +110,7 @@ const createFormEditingTemplate = (point) => {
                   <label class="event__label  event__type-output" for="event-destination-1">
                     ${type}
                   </label>
-                  <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${he.encode(destinationName)}" list="destination-list-1" required>
+                  <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${he.encode(destination.name)}" list="destination-list-1" required>
                   <datalist id="destination-list-1">
                     ${pointOptions}
                   </datalist>
@@ -147,11 +149,11 @@ const createFormEditingTemplate = (point) => {
 
                 <section class="event__section  event__section--destination ${isDestinationInfo ? '' : 'visually-hidden'}">
                   <h3 class="event__section-title  event__section-title--destination">Destination</h3>
-                  <p class="event__destination-description">${destinationDescription}</p>
+                  <p class="event__destination-description">${destination.description}</p>
 
                   <div class="event__photos-container">
                     <div class="event__photos-tape">
-                      ${destinationPhotos}
+                      ${destination.pictures}
                     </div>
                   </div>
                 </section>

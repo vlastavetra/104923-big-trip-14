@@ -298,6 +298,8 @@ export const generateTripPoint = () => {
     pointOptions,
     isFavorite,
     allOffers,
+    start,
+    end,
   };
 };
 

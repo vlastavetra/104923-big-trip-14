@@ -7,6 +7,7 @@ export const UpdateType = {
   PATCH: 'PATCH',
   MINOR: 'MINOR',
   MAJOR: 'MAJOR',
+  INIT: 'INIT',
 };
 
 export const UserAction = {
@@ -19,4 +20,10 @@ export const FilterType = {
   EVERYTHING: 'everything',
   FUTURE: 'future',
   PAST: 'past',
+};
+
+export const MenuItem = {
+  ADD_NEW_POINT: 'add-new-point',
+  TABLE: 'table',
+  STATS: 'stats',
 };

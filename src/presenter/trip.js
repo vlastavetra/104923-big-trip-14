@@ -1,24 +1,28 @@
+import {sortByTime, sortByPrice, sortByDate} from '../utils/sort';
+import {render, RenderPosition, remove} from '../utils/render';
+import {filter} from '../utils/filter';
+import {UserAction, UpdateType, FilterType} from '../const';
 import SortView, {SortType} from '../view/site-sort';
 import ListView from '../view/trip-list';
 import EmptyTripView from '../view/trip-list-empty';
 import PointPresenter from './point';
 import NewPointPresenter from './new-point';
-import {sortByTime, sortByPrice, sortByDate} from '../utils/sort';
-import {render, RenderPosition, remove} from '../utils/render';
-import {filter} from '../utils/filter';
-import {UserAction, UpdateType, FilterType} from '../const';
+import LoadingView from '../view/loading';
 
 export default class Trip {
   constructor(tripContainer, pointsModel, filterModel) {
     this._pointsModel = pointsModel;
     this._filterModel = filterModel;
     this._tripContainer = tripContainer;
+
     this._pointPresenter = {};
     this._currentSortType = SortType.DEFAULT;
+    this._isLoading = true;
 
     this._sortComponent = new SortView();
     this._listComponent = new ListView();
     this._emptyTripComponent = new EmptyTripView();
+    this._loadingComponent = new LoadingView();
 
     this._handleViewAction = this._handleViewAction.bind(this);
     this._handleModelEvent = this._handleModelEvent.bind(this);
@@ -33,12 +37,31 @@ export default class Trip {
 
   init() {
     this._renderTrip();
+
+    this._pointsModel.addObserver(this._handleModelEvent);
+    this._filterModel.addObserver(this._handleModelEvent);
   }
 
   createPoint() {
     this._currentSortType = SortType.DEFAULT;
     this._filterModel.setFilter(UpdateType.MAJOR, FilterType.EVERYTHING);
     this._newPointPresenter.init();
+  }
+
+  destroy() {
+    this._clearTrip({resetSortType: true});
+
+    remove(this._listComponent);
+    this._pointsModel.removeObserver(this._handleModelEvent);
+    this._filterModel.removeObserver(this._handleModelEvent);
+  }
+
+  hideTripBoard() {
+    this._tripContainer.classList.add('trip-events--hidden');
+  }
+
+  showTripBoard() {
+    this._tripContainer.classList.remove('trip-events--hidden');
   }
 
   _getPoints() {
@@ -86,6 +109,11 @@ export default class Trip {
       case UpdateType.MAJOR:
         this._currentSortType = SortType.DEFAULT;
         this._clearTrip({resetSortType: true});
+        this._renderTrip();
+        break;
+      case UpdateType.INIT:
+        this._isLoading = false;
+        remove(this._loadingComponent);
         this._renderTrip();
         break;
     }
@@ -136,13 +164,22 @@ export default class Trip {
     render(this._tripContainer, this._emptyTripComponent, RenderPosition.BEFOREEND);
   }
 
+  _renderLoading() {
+    render(this._tripContainer, this._loadingComponent, RenderPosition.BEFOREEND);
+  }
+
   _renderTrip() {
+    if (this._isLoading) {
+      this._renderLoading();
+      return;
+    }
+
     if (this._getPoints().length === 0) {
       this._renderEmptyTrip();
-    } else {
-      this._renderSort();
-      this._renderList();
+      return;
     }
+    this._renderSort();
+    this._renderList();
   }
 
   _clearTrip(resetSortType = false) {
